@@ -5,7 +5,6 @@ plugins {
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
-    id("com.google.gms.google-services")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 }
@@ -63,6 +62,8 @@ android {
 dependencies {
     // Hilt
     implementation (libs.hilt.android)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.recyclerview)
     kapt (libs.hilt.compiler)
 
     // Room

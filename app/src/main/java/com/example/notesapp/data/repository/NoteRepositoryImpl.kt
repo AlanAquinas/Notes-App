@@ -9,6 +9,7 @@ import javax.inject.Inject
 class NoteRepositoryImpl @Inject constructor(
     private val noteDao : NoteDao
 ): NoteRepository {
+
     override suspend fun getAllData(): Flow<List<Note>> {
         return noteDao.readAllData()
     }

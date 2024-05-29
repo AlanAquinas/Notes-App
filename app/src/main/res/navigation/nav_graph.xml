@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/noteListFragment">
+
+    <fragment
+        android:id="@+id/noteListFragment"
+        android:name="com.example.notesapp.presentation.main.NoteListFragment"
+        android:label="fragment_note_list"
+        tools:layout="@layout/fragment_note_list" >
+        <action
+            android:id="@+id/action_noteListFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
+        <action
+            android:id="@+id/action_noteListFragment_to_detailNoteFragment"
+            app:destination="@id/detailNoteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.example.notesapp.presentation.add_note.AddNoteFragment"
+        android:label="fragment_add_note"
+        tools:layout="@layout/fragment_add_note" >
+        <action
+            android:id="@+id/action_addNoteFragment_to_noteListFragment"
+            app:destination="@id/noteListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailNoteFragment"
+        android:name="com.example.notesapp.presentation.detail_note.DetailNoteFragment"
+        android:label="fragment_detail_note"
+        tools:layout="@layout/fragment_detail_note" >
+        <action
+            android:id="@+id/action_detailNoteFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
+        <action
+            android:id="@+id/action_detailNoteFragment_to_noteListFragment"
+            app:destination="@id/noteListFragment" />
+        <argument
+            android:name="detailNote"
+            app:argType="com.example.notesapp.data.model.Note" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.example.notesapp.presentation.edit_note.EditNoteFragment"
+        android:label="fragment_edit_note"
+        tools:layout="@layout/fragment_edit_note" >
+        <action
+            android:id="@+id/action_editNoteFragment_to_noteListFragment"
+            app:destination="@id/noteListFragment" />
+        <argument
+            android:name="editNote"
+            app:argType="com.example.notesapp.data.model.Note" />
+    </fragment>
+
+</navigation>

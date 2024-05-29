@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Notes App</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="you_dont_have_any_notes_yet">You don\'t have any notes yet</string>
+    <string name="note">Note</string>
+    <string name="name">Name</string>
+    <string name="create_note_button">Add note</string>
+    <string name="save">SAVE</string>
+    <string name="edit">Edit</string>
+    <string name="noteName">NoteName</string>
+    <string name="date">Date</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.notesapp.domain.usecase
 
-import androidx.compose.runtime.referentialEqualityPolicy
 import com.example.notesapp.data.model.Note
 import com.example.notesapp.domain.repository.NoteRepository
 import kotlinx.coroutines.Dispatchers

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NoteDao {
 
-    @Query("SELECT * FROM notesTable ORDER BY id ASC")
+    @Query(value = "SELECT * FROM notesTable ORDER BY id ASC")
     fun readAllData(): Flow<List<Note>>
 
     @Insert
