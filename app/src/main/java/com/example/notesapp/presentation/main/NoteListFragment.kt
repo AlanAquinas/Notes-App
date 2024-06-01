@@ -9,20 +9,25 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notesapp.R
+import com.example.notesapp.data.model.Note
 import com.example.notesapp.databinding.FragmentNoteListBinding
 import com.example.notesapp.presentation.NoteViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NoteListFragment : Fragment(R.layout.fragment_note_list) {
+class NoteListFragment : Fragment(R.layout.fragment_note_list), OnNoteClickListener {
     private var _binding: FragmentNoteListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: NoteViewModel by viewModels()
-    private val notesAdapter by lazy { NotesAdapter() }
+    private val notesAdapter by lazy { NotesAdapter(this) }
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +35,8 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNoteListBinding.inflate(inflater, container, false)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext().applicationContext)
+
         return binding.root
     }
 
@@ -72,5 +79,15 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onNoteClick(note: Note) {
+        val bundle = Bundle().apply {
+            putString("note_viewed", "true")
+        }
+        firebaseAnalytics.logEvent("view_note", bundle)
+
+        val action = NoteListFragmentDirections.actionNoteListFragmentToDetailNoteFragment(note)
+        findNavController().navigate(action)
     }
 }

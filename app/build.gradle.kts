@@ -7,6 +7,7 @@ plugins {
     id("kotlin-parcelize")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -74,6 +75,10 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    // Analytics
+    implementation(libs.firebase.analytics.v2151)
+    implementation(libs.firebase.bom)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

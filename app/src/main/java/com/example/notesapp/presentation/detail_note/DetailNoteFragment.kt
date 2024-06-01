@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.notesapp.R
 import com.example.notesapp.databinding.FragmentDetailNoteBinding
 import com.example.notesapp.presentation.NoteViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +20,7 @@ class DetailNoteFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: NoteViewModel by viewModels()
     private val args: DetailNoteFragmentArgs by navArgs()
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +28,7 @@ class DetailNoteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailNoteBinding.inflate(inflater, container, false)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext().applicationContext)
 
         val note = args.detailNote
         binding.nameDetail.text = note.name
@@ -37,6 +40,11 @@ class DetailNoteFragment : Fragment() {
         }
 
         binding.deleteButton.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("note_removed", "true")
+            }
+            firebaseAnalytics.logEvent("remove_note", bundle)
+
             findNavController().navigate(R.id.action_detailNoteFragment_to_noteListFragment)
             viewModel.deleteNote(note)
         }

@@ -39,7 +39,7 @@ class EditNoteFragment : Fragment() {
             val formattedDate = getCurrentFormattedDate()
 
             val note = Note(
-                0,
+                args.editNote.id,
                 binding.nameInput.editText?.text.toString(),
                 binding.noteInput.editText?.text.toString(),
                 formattedDate

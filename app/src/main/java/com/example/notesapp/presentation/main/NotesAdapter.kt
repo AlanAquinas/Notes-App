@@ -1,15 +1,17 @@
 package com.example.notesapp.presentation.main
 
+import NoteDiffCallback
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.notesapp.data.model.Note
 import com.example.notesapp.databinding.FragmentNoteBinding
 
-class NotesAdapter: RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
+class NotesAdapter(private val listener: OnNoteClickListener): RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     private var noteList: List<Note> = emptyList()
 
@@ -28,17 +30,21 @@ class NotesAdapter: RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
         myHolder.dateTv.text = note.date
 
         holder.itemView.setOnClickListener {
-            val action = NoteListFragmentDirections.actionNoteListFragmentToDetailNoteFragment(note)
-            it.findNavController().navigate(action)
+            listener.onNoteClick(note)
         }
 
     }
 
     override fun getItemCount(): Int = noteList.size
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setData(newNoteList: List<Note>){
+        val diffCallback = NoteDiffCallback(noteList, newNoteList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         noteList = newNoteList
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
+}
+
+interface OnNoteClickListener {
+    fun onNoteClick(note: Note)
 }
