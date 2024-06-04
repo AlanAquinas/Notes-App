@@ -43,7 +43,7 @@ class NoteViewModel @Inject constructor(
                 }
                 .collect { notes ->
                     if (notes.isEmpty()) {
-                        errorMessage.postValue(
+                        errorMessage.setValue(
                             UiText.StringResource(
                                 R.string.you_dont_have_any_notes_yet
                             )

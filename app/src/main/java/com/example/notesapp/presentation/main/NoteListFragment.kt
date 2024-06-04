@@ -21,11 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NoteListFragment : Fragment(R.layout.fragment_note_list), OnNoteClickListener {
+class NoteListFragment : Fragment(R.layout.fragment_note_list) {
     private var _binding: FragmentNoteListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: NoteViewModel by viewModels()
-    private val notesAdapter by lazy { NotesAdapter(this) }
+    private lateinit var notesAdapter: NotesAdapter
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
 
@@ -42,6 +42,8 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list), OnNoteClickListe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        notesAdapter = NotesAdapter(::onNoteClicked)
 
         setupRecyclerView()
         setupNavController()
@@ -81,7 +83,7 @@ class NoteListFragment : Fragment(R.layout.fragment_note_list), OnNoteClickListe
         _binding = null
     }
 
-    override fun onNoteClick(note: Note) {
+    private fun onNoteClicked(note: Note) {
         val bundle = Bundle().apply {
             putString("note_viewed", "true")
         }

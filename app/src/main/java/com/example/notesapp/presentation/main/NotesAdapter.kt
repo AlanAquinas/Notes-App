@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.notesapp.data.model.Note
 import com.example.notesapp.databinding.FragmentNoteBinding
 
-class NotesAdapter(private val listener: OnNoteClickListener): RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
+class NotesAdapter(private val onItemClicked: (Note) -> Unit ): RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     private var noteList: List<Note> = emptyList()
 
@@ -30,7 +30,8 @@ class NotesAdapter(private val listener: OnNoteClickListener): RecyclerView.Adap
         myHolder.dateTv.text = note.date
 
         holder.itemView.setOnClickListener {
-            listener.onNoteClick(note)
+//            listener.onNoteClick(note)
+            onItemClicked(note)
         }
 
     }
@@ -43,8 +44,4 @@ class NotesAdapter(private val listener: OnNoteClickListener): RecyclerView.Adap
         noteList = newNoteList
         diffResult.dispatchUpdatesTo(this)
     }
-}
-
-interface OnNoteClickListener {
-    fun onNoteClick(note: Note)
 }
